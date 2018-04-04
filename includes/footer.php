@@ -1,1 +1,3 @@
-<h1>FOOTER</h1>
+<footer>
+<p>&copy; <?php echo date ('Y') ?> - Dieppe Agglo Merguez Corp.</p>
+</footer>
