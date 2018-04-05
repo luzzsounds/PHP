@@ -46,7 +46,29 @@ if (isset($_POST['frmRegistration'])) {
 
     else {
         $connection = mysqli_connect("localhost", "ludwig", "WEBFORCE3", "phpdieppe" );
-        // permet de ce connecter a la base de donne (adresse, utilisateur, mot de passe, base de donné )
+        $mdp = sha1($mdp);
+        // permet de ce connecter a la base de donne : mysqli_connect( adresse, utilisateur, mot de passe, base de donné )
+        $requete = "INSERT INTO T_USERS
+                    (USERNAME, USEFIRSTNAME, USERMAIL, USEPASSWORD, ID_ROLE)
+                    VALUE ('$nom', '$prenom','$mail', '$mdp', 3)";
+
+
+
+        die($requete);
+        //
+        if($connection) {
+          die("Erreur MySQL" . mysqli_connect_erno() . " | " . mysqli_connect_error());
+        }
+
+        else (mysqli_query($requete)) {
+            echo "Données enregistrée"
+          }
+          else {
+            echo "Erreur";
+            include "frmRegistration.php";
+          }
+
+
 
     }
 }
