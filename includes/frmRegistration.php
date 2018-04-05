@@ -1,6 +1,6 @@
 <form method="post" action="#">
   <div>
-      <label for="nom">Nom&nbsp;:</label>
+      <label for="nom">Nom&nbsp;:</label>     <!-- espace insecaple Nom&nbsp; -->
       <input type="text" name="nom" value="<?php if(isset($nom)) echo $nom; ?>"/>
   </div>
   <br>
