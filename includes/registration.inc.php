@@ -42,13 +42,11 @@ if (isset($_POST['frmRegistration'])) {
 
        include "frmRegistration.php";
 
-
-
-
     }
 
     else {
-      echo "Pas d'erreurs";
+        $connection = mysqli_connect("localhost", "ludwig", "WEBFORCE3", "phpdieppe" );
+        // permet de ce connecter a la base de donne (adresse, utilisateur, mot de passe, base de donné )
 
     }
 }
