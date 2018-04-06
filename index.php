@@ -10,7 +10,7 @@
 <?php
 include "./function/callPage.php";
 include "./includes/header.php";
-include "./includes/footer.php";
+
 ?>
 
   <main>
@@ -20,6 +20,10 @@ callPage();
   </main>
 
   </div>
+<footer>
+<?php
+include "./includes/footer.php";
+?>
 
 
 
