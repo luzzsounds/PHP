@@ -14,7 +14,7 @@ if (isset($_POST['frmRegistration'])) {
     // Opérateur ternaire
     // $nom = isset($_POST['nom']) ? $_POST['nom'] : "" ;       //operateur ternaire
 
-    // Opérateur NULL coalescent PHP7
+    // Opérateur NULL coalescent PHP7           permet de recuperer les champ input
     $nom = $_POST['nom'] ?? "";
     $prenom = $_POST['prenom'] ?? "";
     $mail = $_POST['mail'] ?? "";
@@ -45,7 +45,7 @@ if (isset($_POST['frmRegistration'])) {
     }
 
     else {
-        $connection = mysqli_connect("localhost", "ludwig", "WEBFORCE3", "phpdieppe" );
+        $connection = mysqli_connect("localhost", "root", "", "phpdieppe" );
         $mdp = sha1($mdp);
         // permet de ce connecter a la base de donne : mysqli_connect( adresse, utilisateur, mot de passe, base de donné )
         $requete = "INSERT INTO T_USERS
@@ -54,22 +54,22 @@ if (isset($_POST['frmRegistration'])) {
 
 
 
-        die($requete);
-        //
-        if($connection) {
-          die("Erreur MySQL" . mysqli_connect_erno() . " | " . mysqli_connect_error());
+
+
+        if(!$connection) {
+          die("erreur MySQL" . mysqli_connect_errno() . " | " . mysqli_connect_error());
         }
 
-        else (mysqli_query($requete)) {
-            echo "Données enregistrée"
-          }
-          else {
-            echo "Erreur";
-            include "frmRegistration.php";
-          }
-
-
-
+        else{
+            if(mysqli_query($connection, $requete)) {
+            echo "Données enregistrée";
+            }
+            else {
+                echo "Erreur";
+                include "frmRegistration.php";
+            }
+          mysqli_close($connection);
+        }
     }
 }
 
