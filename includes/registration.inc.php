@@ -45,12 +45,19 @@ if (isset($_POST['frmRegistration'])) {
     }
 
     else {
-        $connection = mysqli_connect("localhost", "root", "", "phpdieppe" );
+        $connection = mysqli_connect("localhost", "ludwig", "WEBFORCE3", "phpdieppe" );
+        // nom de domaine / id de la bdd / mdp / nom de la base de donne
         $mdp = sha1($mdp);
+
+
+        $token = uniqid(sha1(date('Y-m-d|H:m:s')), false);
+
+
+
         // permet de ce connecter a la base de donne : mysqli_connect( adresse, utilisateur, mot de passe, base de donné )
         $requete = "INSERT INTO T_USERS
-                    (USERNAME, USEFIRSTNAME, USERMAIL, USEPASSWORD, ID_ROLE)
-                    VALUE ('$nom', '$prenom','$mail', '$mdp', 3)";
+                    (USERNAME, USEFIRSTNAME, USERMAIL, USEPASSWORD, ID_ROLE, USETOKEN)
+                    VALUE ('$nom', '$prenom','$mail', '$mdp', 3, '$token')";
 
 
 
@@ -62,7 +69,36 @@ if (isset($_POST['frmRegistration'])) {
 
         else{
             if(mysqli_query($connection, $requete)) {
-            echo "Données enregistrée";
+
+              echo "Données enregistrée";
+
+              $id = mysqli_insert_id($connection);
+
+              $messageMail = "<h1> Wunderbar !!!!!</h1>";
+              $messageMail .= "<p>Vous etes inscript !</p>";
+              $messageMail .= "<p>Mais vous devez valider votrre inscription.</p>";
+              $messageMail .="<p><a href='http://localhost/php/index.php?page=mailValidation&amp;id=$id&amp;token=$token'>";
+              $messageMail .= "Clique-moi grand fou !";
+              $messageMail .= "</a></p>";
+
+
+
+
+
+
+
+              $headers = "From: manu@elysees.fr" . "\r\n" .
+                          "Reply-to: doudou@matignon.com" . "\r\n" .
+                          "X-Mailer: PHP/" . phpversion();
+
+              mail($mail, 'Inscription compte', $messageMail, $headers);
+
+
+
+
+
+
+
             }
             else {
                 echo "Erreur";
