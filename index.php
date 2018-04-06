@@ -8,8 +8,12 @@
 <body>
   <div class="container">
 <?php
+session_start();
+echo session_id();
+
 include "./function/callPage.php";
 include "./includes/header.php";
+
 
 ?>
 

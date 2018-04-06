@@ -23,13 +23,30 @@ if (isset($_GET['id']) && isset($_GET['token'])) {
                         AND USETOKEN='$token' ";
 
 
-      die($requeteVerif);
-
+      if ($resultatRequete = mysqli_query($connection, $requeteVerif)) {
+            $nbrResultats = mysqli_num_rows($resultatRequete);
+            mysqli_free_result($resultatRequete);
+            if ($nbrResultats > 0) {
+                $requeteUpdate = "UPDATE T_USERS
+                                SET USEVERIF=1
+                                WHERE ID_USER=$id";
+                if (mysqli_query($connection, $requeteUpdate)) {
+                    echo "Inscription validée";
+                }
+                else {
+                    echo "Inscription pas validée, mais alors pas validée du tout";
+                }
+            }
+            else {
+                echo "<h1>Bien tenté, mais essaie encore</h1>";
+            }
+        }
+        else {
+            echo "Erreur";
+        }
+        mysqli_close($connection);
     }
-
-
 }
-
 else {
-
+    echo "<h1>Bien tenté, mais essaie encore</h1>";
 }
